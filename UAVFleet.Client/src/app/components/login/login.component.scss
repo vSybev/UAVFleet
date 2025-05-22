@@ -1,0 +1,59 @@
+@use 'variables' as var;
+@use 'mixins' as mixins;
+@use 'card';
+@use 'form-shared';
+
+.login-card {
+  max-width: 400px;
+  margin: var.$gap auto;
+}
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var.$light;
+
+  .login-form {
+    background: var.$bg-sheet;
+    padding: var.$gap * 2;
+    border-radius: var.$radius * 2;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 320px;
+
+    h2 {
+      text-align: center;
+      margin-bottom: var.$gap * 1.5;
+      color: var.$primary;
+    }
+
+    .field {
+      margin-bottom: var.$gap;
+      label {
+        display: block;
+        margin-bottom: var.$gap / 4;
+        color: var.$text-color;
+        font-weight: 500;
+      }
+      input {
+        width: 100%;
+        padding: var.$gap / 2;
+        border: 1px solid var.$border;
+        border-radius: var.$radius;
+      }
+    }
+
+    .error {
+      color: var.$danger;
+      text-align: center;
+      margin-bottom: var.$gap;
+    }
+
+    button {
+      width: 100%;
+      @include mixins.btn(var.$primary, var.$primary * 0.9);
+      font-size: 1rem;
+      padding: var.$gap / 2;
+    }
+  }
+}

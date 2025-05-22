@@ -1,0 +1,19 @@
+@use 'variables' as var;
+@use 'mixins' as mixins;
+@use 'form-shared';
+
+:host {
+  @include mixins.form-container(600px);
+
+  h1 {
+    margin-bottom: var.$gap * 1.5;
+    font-size: 1.75rem;
+    color: var.$dark;
+    text-align: center;
+  }
+
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: var.$gap / 2;
+  }
+}

@@ -1,0 +1,64 @@
+@use 'variables' as var;
+@use 'mixins'    as mixins;
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var.$body-bg;
+  color: var.$text-color;
+  font-family: var.$font-family;
+  line-height: 1.6;
+}
+
+.filter-bar {
+  display: flex;
+  gap: var.$gap;
+  margin-bottom: var.$gap;
+}
+
+.loading {
+  text-align: center;
+  font-style: italic;
+  color: var.$text-color-secondary;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var.$gap;
+
+  th,
+  td {
+    border: 1px solid var.$border;
+    padding: var.$gap / 2;
+    text-align: left;
+  }
+
+  th {
+    background-color: var.$light;
+    font-weight: 600;
+  }
+
+  // четни редове
+  tr:nth-child(even) {
+    background-color: var.$light;
+  }
+
+  // hover ефект върху ред
+  tbody tr:hover {
+    background-color: var.$row-hover-bg;
+    color: #fff;
+  }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var.$gap;
+  margin-top: var.$gap;
+
+  button {
+    @include mixins.btn(var.$primary, var.$primary-hover);
+  }
+}

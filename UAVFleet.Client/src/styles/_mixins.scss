@@ -1,0 +1,104 @@
+@use 'variables' as var;
+
+// Основен миксин за картичка с опция за максимална ширина
+@mixin card($max-width: null) {
+  background: var.$bg-sheet;
+  border: 1px solid var.$border;
+  border-radius: var.$radius;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: var.$gap;
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  @if $max-width {
+    max-width: $max-width;
+    margin: 0 auto;
+  }
+}
+
+// Миксин за бутон с фон и hover ефект
+@mixin btn($bg, $hover) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var.$gap / 4;
+  padding: var.$gap / 2 var.$gap;
+  border: none;
+  border-radius: var.$radius;
+  font-family: var.$font-family;
+  font-size: 1rem;
+  cursor: pointer;
+  background: $bg;
+  color: #fff;
+  transition: background 0.2s, transform 0.1s;
+
+  &:hover:not(:disabled) {
+    background: $hover;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:focus {
+    outline: 2px solid $hover;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Миксин за контейнер на форма: grid layout, card стил, input styles
+@mixin form-container($max-width: 600px) {
+  @include card($max-width);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var.$gap * 1.5;
+
+  label {
+    align-self: center;
+    font-weight: 600;
+    color: var.$text-color;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: var.$gap / 2;
+    border: 1px solid var.$border;
+    border-radius: var.$radius;
+    font-family: var.$font-family;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: var.$primary;
+      outline: none;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 5rem;
+  }
+
+  .error, small {
+    grid-column: 2;
+    color: var.$danger;
+    font-size: 0.875rem;
+    margin-top: var.$gap / 4;
+  }
+
+  .actions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: var.$gap;
+  }
+}

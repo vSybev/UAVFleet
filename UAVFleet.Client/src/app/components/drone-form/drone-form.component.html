@@ -1,0 +1,76 @@
+<form class="shared-form" [formGroup]="form" (ngSubmit)="submit()">
+  <!-- Serial Number -->
+  <div class="form-group">
+    <label for="serialNumber">Serial Number</label>
+    <input id="serialNumber"
+           formControlName="serialNumber"
+           placeholder="e.g. SN-12345" />
+    <small *ngIf="form.get('serialNumber')?.invalid && form.get('serialNumber')?.touched">
+      Required, max 50 chars
+    </small>
+  </div>
+  <!-- Manufacturer -->
+  <div class="form-group">
+    <label for="manufacturer">Manufacturer</label>
+    <input id="manufacturer"
+           formControlName="manufacturer"
+           placeholder="e.g. DJI" />
+    <small *ngIf="form.get('manufacturer')?.invalid && form.get('manufacturer')?.touched">
+      Required, max 100 chars
+    </small>
+  </div>
+  <!-- Model -->
+  <div class="form-group">
+    <label for="model">Model</label>
+    <input id="model"
+           formControlName="model"
+           placeholder="e.g. Phantom 4" />
+    <small *ngIf="form.get('model')?.invalid && form.get('model')?.touched">
+      Required, max 100 chars
+    </small>
+  </div>
+  <!-- Payload -->
+  <div class="form-group">
+    <label for="payloadCapacity">Payload Capacity (kg)</label>
+    <input id="payloadCapacity"
+           type="number"
+           formControlName="payloadCapacity"
+           min="0" />
+    <small *ngIf="form.get('payloadCapacity')?.invalid && form.get('payloadCapacity')?.touched">
+      Must be &ge; 0
+    </small>
+  </div>
+  <!-- Service Date -->
+  <div class="form-group">
+    <label for="serviceDate">Last Service Date</label>
+    <input id="serviceDate"
+           type="date"
+           formControlName="serviceDate"
+           max="{{ today | date:'yyyy-MM-dd' }}" />
+    <small *ngIf="form.get('serviceDate')?.invalid && form.get('serviceDate')?.touched">
+      Cannot be in the future
+    </small>
+  </div>
+  <!-- Status -->
+  <div class="form-group">
+    <label for="status">Status</label>
+    <select id="status" formControlName="status">
+      <option value="">— Select status —</option>
+      <option value="idle">Idle</option>
+      <option value="in_mission">In Mission</option>
+      <option value="maintenance">Maintenance</option>
+    </select>
+    <small *ngIf="form.get('status')?.invalid && form.get('status')?.touched">
+      Must choose a status
+    </small>
+  </div>
+  <!-- Actions -->
+  <div class="actions">
+    <button type="submit"
+            class="submit"
+            [disabled]="form.invalid">{{ id ? 'Save' : 'Create' }}</button>
+    <button type="button"
+            class="cancel"
+            (click)="cancel()">Cancel</button>
+  </div>
+</form>

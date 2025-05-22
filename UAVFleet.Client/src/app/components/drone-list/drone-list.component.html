@@ -1,0 +1,83 @@
+<div class="card drone-list">
+  <div class="card-header">
+    <h2>Drones</h2>
+    <button (click)="toggleView()" class="btn-secondary">
+      <fa-icon [icon]="viewMode === 'table' ? 'th-large' : 'th-list'"></fa-icon>
+    </button>
+    <button routerLink="/drones/new" class="btn-primary">
+      <fa-icon icon="plus"></fa-icon> Add Drone
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="filter-bar">
+      <input [formControl]="form.controls.serialNumber"
+             placeholder="Filter by serial…"
+             type="text" />
+      <select [formControl]="form.controls.status">
+        <option value="">All statuses</option>
+        <option value="idle">Idle</option>
+        <option value="in_mission">In Mission</option>
+        <option value="maintenance">Maintenance</option>
+      </select>
+    </div>
+    <div *ngIf="loading" class="loading">Loading…</div>
+    <!-- Table view -->
+    <table *ngIf="!loading && viewMode === 'table'">
+      <thead>
+        <tr>
+          <th>Serial</th>
+          <th>Manufacturer</th>
+          <th>Model</th>
+          <th>Payload</th>
+          <th>Service</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of drones">
+          <td>{{ d.serialNumber }}</td>
+          <td>{{ d.manufacturer }}</td>
+          <td>{{ d.model }}</td>
+          <td>{{ d.payloadCapacity }} kg</td>
+          <td>{{ d.serviceDate | date:'shortDate' }}</td>
+          <td>{{ d.status }}</td>
+          <td class="actions">
+            <a [routerLink]="['/drones', d.droneId]" class="btn-secondary">
+              <fa-icon icon="file-edit"></fa-icon>
+              Edit</a>
+            <button (click)="delete(d.droneId)"
+                    class="btn-danger"
+                    style="margin-left: 10px">
+              <fa-icon icon="trash-can"></fa-icon>
+              Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Card view -->
+    <div class="card-list" *ngIf="!loading && viewMode === 'cards'">
+      <div class="card-item" *ngFor="let d of drones">
+        <img [ngSrc]="getDroneImage(d.model)"
+             alt="UAV Fleet"
+             class="w-full h-auto mb-6 rounded-lg shadow-lg"
+             height="60"
+             width="60"/>
+        <div class="title">{{ d.serialNumber }}</div>
+        <div class="subtitle">{{ d.manufacturer }} - {{ d.model }}</div>
+        <div class="actions">
+          <a [routerLink]="['/drones', d.droneId]" class="btn-primary"> Edit </a>
+          <button (click)="delete(d.droneId)" class="btn-danger"> Delete </button>
+        </div>
+      </div>
+    </div>
+    <!-- Paginator -->
+    <div class="pagination">
+      <button (click)="prev()"
+              [disabled]="page===1"> Prev </button>
+      <span> Page {{ page }} of {{ totalPages }} </span>
+      <button (click)="next()"
+              [disabled]="page===totalPages"> Next </button>
+    </div>
+  </div>
+</div>

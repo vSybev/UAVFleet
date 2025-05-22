@@ -1,0 +1,135 @@
+@use 'variables' as var;
+@use 'mixins'    as mixins;
+@use 'shared';
+
+:host {
+  /* Основен card стил */
+  @include mixins.card();
+
+  /* Заглавие с бутон за добавяне */
+  & .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var.$gap;
+
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .add-button {
+      @include mixins.btn(var.$primary, var.$primary-hover);
+    }
+  }
+
+  /* Тяло на картата */
+  & .card-body {
+    /* Лента за филтри */
+    .filter-bar {
+      display: flex;
+      gap: var.$gap;
+      margin-bottom: var.$gap * 1.5;
+
+      input,
+      select {
+        padding: var.$gap / 2;
+        border: 1px solid var.$border;
+        border-radius: var.$radius;
+      }
+    }
+
+    /* Таблица */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: var.$gap;
+
+      th,
+      td {
+        border: 1px solid var.$border;
+        padding: var.$gap / 2;
+        text-align: left;
+      }
+
+      th {
+        background-color: var.$light;
+        font-weight: 600;
+      }
+
+      tr:nth-child(even) {
+        background-color: var.$light;
+      }
+
+      tbody tr:hover {
+        background-color: var.$row-hover-bg;
+        color: #fff;
+      }
+    }
+
+    /* Пагинация */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var.$gap;
+      margin-top: var.$gap;
+
+      button {
+        @include mixins.btn(var.$primary, var.$primary-hover);
+      }
+    }
+  }
+
+  /* Визуализация като картички */
+  & .card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var.$gap;
+    margin-bottom: var.$gap;
+
+    .card-item {
+      @include mixins.card();
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background: var.$card-bg;
+
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: var.$radius;
+        margin-bottom: var.$gap;
+      }
+
+      .title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: var.$gap / 2;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+        color: var.$text-color-secondary;
+        margin-bottom: var.$gap;
+      }
+
+      .actions {
+        margin-top: auto;
+        display: flex;
+        gap: var.$gap / 2;
+
+        a,
+        button {
+          flex: 1;
+        }
+
+        .btn-danger {
+          @include mixins.btn(var.$danger, var.$danger-hover);
+        }
+      }
+    }
+  }
+}

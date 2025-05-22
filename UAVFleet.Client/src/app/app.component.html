@@ -1,0 +1,12 @@
+<nav *ngIf="auth.isLoggedIn" class="main-nav">
+  <a routerLink="/drones" routerLinkActive="active">Drones</a>
+  <a routerLink="/operators" routerLinkActive="active">Operators</a>
+  <a routerLink="/missions" routerLinkActive="active">Missions</a>
+  <button class="theme-toggle" (click)="toggleTheme()">
+    <fa-icon [icon]="isDark ? 'sun' : 'moon'"></fa-icon>
+  </button>
+  <button (click)="logout()" class="logout-button">
+    <fa-icon icon="sign-out-alt"></fa-icon>
+  </button>
+</nav>
+<router-outlet></router-outlet>

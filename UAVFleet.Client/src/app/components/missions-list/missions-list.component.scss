@@ -1,0 +1,88 @@
+@use 'variables' as var;
+@use 'mixins' as mixins;
+@use 'shared';
+
+:host {
+  /* Основен card стил */
+  @include mixins.card();
+
+  /* Header: заглавие и бутон добавяне */
+  & .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var.$gap;
+
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .add-button {
+      @include mixins.btn(var.$primary, var.$primary-hover);
+    }
+  }
+
+  /* Тяло на картата */
+  & .card-body {
+    /* Филтърна лента */
+    .filter-bar {
+      display: flex;
+      gap: var.$gap;
+      margin-bottom: var.$gap * 1.5;
+
+      input,
+      select {
+        padding: var.$gap / 2;
+        border: 1px solid var.$border;
+        border-radius: var.$radius;
+      }
+    }
+
+    /* Таблица с мисии */
+    .mission-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: var.$gap;
+
+      th,
+      td {
+        border: 1px solid var.$border;
+        padding: var.$gap / 2;
+        text-align: left;
+      }
+
+      th {
+        background-color: var.$light;
+        font-weight: 600;
+      }
+
+      tr:nth-child(even) {
+        background-color: var.$light;
+      }
+
+      tr:hover {
+        background-color: var.$secondary;
+        color: #fff;
+      }
+
+      th:nth-child(1), td:nth-child(1) { width: 10%; }
+      th:nth-child(2), td:nth-child(2) { width: 15%; }
+      th:nth-child(3), td:nth-child(3) { width: 15%; }
+    }
+
+    /* Пагинация */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var.$gap;
+      margin-top: var.$gap;
+
+      button {
+        @include mixins.btn(var.$primary, var.$primary-hover);
+      }
+    }
+  }
+}

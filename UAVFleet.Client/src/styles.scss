@@ -1,0 +1,108 @@
+@use 'variables';
+@use 'mixins';
+@use 'buttons';
+@use 'card';
+@use 'shared';
+@use 'form-shared';
+
+// Светла тема (по подразбиране)
+:root {
+  --color-bg:               #ffffff;
+  --color-surface:          #f5f5f5;
+  --color-border:           #e0e0e0;
+  --color-text:             #212121;
+  --color-text-secondary:   #616161;
+  --color-primary:          #1e88e5;
+  --color-primary-hover:    #1565c0;
+  --color-accent:           #e53935;
+  --color-accent-hover:     #b71c1c;
+  --color-success:          #43a047;
+  --color-success-hover:    #2e7d32;
+}
+
+// Тъмна тема
+.dark-theme {
+  --color-bg:               #121212;
+  --color-surface:          #1e1e1e;
+  --color-border:           #333333;
+  --color-text:             #e0e0e0;
+  --color-text-secondary:   #a0a0a0;
+  --color-primary:          #90caf9;
+  --color-primary-hover:    #64b5f6;
+  --color-accent:           #f48fb1;
+  --color-accent-hover:     #f06292;
+  --color-success:          #81c784;
+  --color-success-hover:    #66bb6a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: variables.$font-family;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+.btn {
+  @include mixins.btn(var(--color-primary), var(--color-primary-hover));
+}
+.btn-success {
+  @include mixins.btn(var(--color-success), var(--color-success-hover));
+}
+.btn-accent {
+  @include mixins.btn(var(--color-accent), var(--color-accent-hover));
+}
+
+.card {
+  @include mixins.card;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: variables.$gap;
+
+  th,
+  td {
+    border: 1px solid var(--color-border);
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  th {
+    background-color: var(--color-surface);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  tr:nth-child(even) {
+    background-color: var(--color-bg);
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: variables.$gap / 2;
+
+  button {
+    @include mixins.btn(var(--color-primary), var(--color-primary-hover));
+  }
+}

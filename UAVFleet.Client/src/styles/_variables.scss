@@ -1,0 +1,65 @@
+$primary:               #4a90e2;
+$primary-hover:         darken($primary, 10%);
+$secondary:             #50e3c2;
+$secondary-hover:       darken($secondary, 5%);
+$success:               #7ed321;
+$success-hover:         darken($success, 10%);
+$info:                  #9013fe;
+$warning:               #f5a623;
+$danger:                #d0021b;
+$danger-hover:          darken($danger, 10%);
+$light:                 #f7f9fc;
+$dark:                  #1f1f1f;
+
+// Нов цвят lightsteelblue за фон на карти, меню и hover на таблица
+$lightsteelblue:        #b0c4de;
+
+$body-bg:               $light;
+$text-color:            #333333;
+$text-color-secondary:  #656f7a;
+$bg-sheet:              #ffffff; // оставяме за други panel фонове
+$card-bg:               $lightsteelblue; // фон на картички
+$menu-bg:               $lightsteelblue; // фон на меню
+$row-hover-bg:          $lightsteelblue; // hover фон на таблица
+
+$border:                #e1e8f2;
+
+$font-family:           'Roboto', sans-serif;
+
+$gap:                   1rem;
+$radius:                0.5rem;
+
+$breakpoint-sm:         576px;
+$breakpoint-md:         768px;
+$breakpoint-lg:         992px;
+$breakpoint-xl:         1200px;
+
+:root {
+  --color-bg:             #ffffff;
+  --color-surface:        #fafbfd;
+  --color-border:         #e1e8f2;
+  --color-text:           #333333;
+  --color-text-secondary: #656f7a;
+  --color-primary:        #{$primary};
+  --color-primary-hover:  #{$primary-hover};
+  --color-accent:         #{$danger};
+  --color-accent-hover:   #{$danger-hover};
+  --color-success:        #{$success};
+  --color-success-hover:  #{$success-hover};
+  --color-alt:            #{$lightsteelblue};
+}
+
+.dark-theme {
+  --color-bg:             #121212;
+  --color-surface:        #1e1e1e;
+  --color-border:         #333333;
+  --color-text:           #e0e0e0;
+  --color-text-secondary:#a0a0a0;
+  --color-primary:        #90caf9;
+  --color-primary-hover:  #64b5f6;
+  --color-accent:         #f48fb1;
+  --color-accent-hover:   #f06292;
+  --color-success:        #81c784;
+  --color-success-hover:  #66bb6a;
+  --color-alt:            #b0c4de;
+}

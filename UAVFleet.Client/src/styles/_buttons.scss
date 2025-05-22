@@ -1,0 +1,18 @@
+@use 'mixins' as mixins;
+@use 'variables' as var;
+
+.btn-primary {
+  @include mixins.btn(var.$primary, var.$primary-hover);
+}
+
+.btn-secondary {
+  @include mixins.btn(var.$secondary, var.$secondary-hover);
+}
+
+.btn-success {
+  @include mixins.btn(var.$success, var.$success-hover);
+}
+
+.btn-danger {
+  @include mixins.btn(var.$danger, var.$danger-hover);
+}
