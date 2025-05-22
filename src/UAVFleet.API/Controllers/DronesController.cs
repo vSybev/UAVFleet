@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using UAVFleet.Infrastructure;
 using UAVFleet.API.Models;
 using UAVFleet.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class DronesController : ControllerBase
 {
     private readonly UavFleetContext _ctx;

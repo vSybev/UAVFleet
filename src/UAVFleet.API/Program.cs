@@ -1,86 +1,68 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using UAVFleet.Infrastructure;
 using UAVFleet.API.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. EF Core + SQL Server
-builder.Services.AddDbContext<UavFleetContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+builder.Services.AddDbContext<UavFleetContext>(opts =>
+    opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-// 2. CORS за Angular
-builder.Services.AddCors(opts =>
-{
-    opts.AddPolicy("AllowAngularDev", policy =>
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyMethod()
-              .AllowAnyHeader()
-    );
-});
+builder.Services.AddCors(o =>
+    o.AddPolicy("AllowAngularDev", p =>
+        p.WithOrigins("http://localhost:4200")
+         .AllowAnyMethod()
+         .AllowAnyHeader()
+    )
+);
 
-// 3. JWT Authentication
-var jwtSection = builder.Configuration.GetSection("Jwt");
-var key = Encoding.UTF8.GetBytes(jwtSection["Key"]!);
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.RequireHttpsMetadata = true;
-    options.SaveToken = true;
-    options.TokenValidationParameters = new TokenValidationParameters
+var jwt = builder.Configuration.GetSection("Jwt");
+var key = Encoding.UTF8.GetBytes(jwt["Key"]!);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(opts =>
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSection["Issuer"],
-        ValidAudience = jwtSection["Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(key)
-    };
-});
+        opts.RequireHttpsMetadata = true;
+        opts.SaveToken = true;
+        opts.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwt["Issuer"],
+            ValidAudience = jwt["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
 
-// 4. Controllers + FluentValidation + Swagger
 builder.Services
     .AddControllers()
-    .AddFluentValidation(cfg =>
-        cfg.RegisterValidatorsFromAssemblyContaining<DroneCreateDtoValidator>()
+    .AddFluentValidation(fv =>
+        fv.RegisterValidatorsFromAssemblyContaining<DroneCreateDtoValidator>()
     );
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "UAV Fleet Management API",
-        Version = "v1"
-    });
-
-    // Swagger JWT support
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "UAV Fleet Management API", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "Въведете JWT като: Bearer {token}",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
+        Scheme = "Bearer",
+        Description = "Въведете: Bearer {your JWT token}"
     });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
         {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
                     Type = ReferenceType.SecurityScheme,
                     Id   = "Bearer"
                 }
@@ -92,19 +74,42 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// 5. Middleware pipeline
+using (var scope = app.Services.CreateScope())
+{
+    var ctx = scope.ServiceProvider.GetRequiredService<UavFleetContext>();
+    DbInitializer.Initialize(ctx);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.Use(async (ctx, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch (ValidationException vf)
+    {
+        ctx.Response.StatusCode = 400;
+        await ctx.Response.WriteAsJsonAsync(new
+        {
+            code = 400,
+            message = vf.Errors.Select(e => e.ErrorMessage)
+        });
+    }
+    catch (Exception ex)
+    {
+        ctx.Response.StatusCode = 500;
+        await ctx.Response.WriteAsJsonAsync(new { code = 500, message = ex.Message });
+    }
+});
+
 app.UseHttpsRedirection();
-
-// CORS
 app.UseCors("AllowAngularDev");
-
-// Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
