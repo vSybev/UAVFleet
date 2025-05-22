@@ -64,7 +64,7 @@ export const appRoutes: Route[] = [
       {
         path: 'missions',
         loadComponent: () =>
-          import('./components/missions-list/missions-list.component').then(m => m.MissionListComponent)
+          import('./components/missions-list/missions-list.component').then(m => m.MissionsListComponent)
       },
       {
         path: 'missions/new',

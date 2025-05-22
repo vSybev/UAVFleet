@@ -44,13 +44,11 @@
           <td>{{ d.status }}</td>
           <td class="actions">
             <a [routerLink]="['/drones', d.droneId]" class="btn-secondary">
-              <fa-icon icon="file-edit"></fa-icon>
-              Edit</a>
+              <fa-icon icon="file-edit"></fa-icon></a>
             <button (click)="delete(d.droneId)"
                     class="btn-danger"
                     style="margin-left: 10px">
-              <fa-icon icon="trash-can"></fa-icon>
-              Delete</button>
+              <fa-icon icon="trash-can"></fa-icon></button>
           </td>
         </tr>
       </tbody>

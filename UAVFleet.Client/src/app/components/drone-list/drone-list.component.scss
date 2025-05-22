@@ -3,34 +3,43 @@
 @use 'shared';
 
 :host {
-  /* Основен card стил */
-  @include mixins.card();
+  display: block;
+  max-width: 900px;
+  margin: var.$gap auto;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 
-  /* Заглавие с бутон за добавяне */
-  & .card-header {
+  /* Header without background */
+  .card-header {
+    background: transparent;
+    padding: 0 var.$gap var.$gap;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: var.$gap;
 
     h2 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.75rem;
       font-weight: 700;
     }
 
-    .add-button {
-      @include mixins.btn(var.$primary, var.$primary-hover);
+    button {
+      margin-left: var.$gap;
     }
   }
 
-  /* Тяло на картата */
-  & .card-body {
-    /* Лента за филтри */
+  /* Body with narrower table container */
+  .card-body {
+    background: transparent;
+    padding: 0;
+
+    /* Filter bar styling */
     .filter-bar {
-      display: flex;
-      gap: var.$gap;
-      margin-bottom: var.$gap * 1.5;
+      @include mixins.card();
+      padding: var.$gap;
+      margin-bottom: var.$gap;
+      background: transparent;
 
       input,
       select {
@@ -40,17 +49,20 @@
       }
     }
 
-    /* Таблица */
+    /* Table view */
     table {
       width: 100%;
+      max-width: 800px;
+      margin: 0 auto var.$gap;
       border-collapse: collapse;
-      margin-bottom: var.$gap;
+      background: transparent;
 
       th,
       td {
         border: 1px solid var.$border;
         padding: var.$gap / 2;
         text-align: left;
+        background: transparent;
       }
 
       th {
@@ -68,67 +80,71 @@
       }
     }
 
-    /* Пагинация */
+    /* Card view styling */
+    .card-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: var.$gap;
+      margin: 0 auto var.$gap;
+      max-width: 800px;
+
+      .card-item {
+        @include mixins.card();
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        background: var.$card-bg;
+
+        img {
+          width: 100%;
+          height: auto;
+          border-radius: var.$radius;
+          margin-bottom: var.$gap;
+        }
+
+        .title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin-bottom: var.$gap / 2;
+        }
+
+        .subtitle {
+          font-size: 1rem;
+          color: var.$text-color-secondary;
+          margin-bottom: var.$gap;
+        }
+
+        .actions {
+          margin-top: auto;
+          display: flex;
+          gap: var.$gap / 2;
+
+          a,
+          button {
+            flex: 1;
+            background: transparent;
+            color: var.$text-color;
+            border: 1px solid var.$border;
+          }
+
+          .btn-danger {
+            @include mixins.btn(var.$danger, var.$danger-hover);
+          }
+        }
+      }
+    }
+
+    /* Pagination centered under views */
     .pagination {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: var.$gap;
-      margin-top: var.$gap;
+      margin: var.$gap auto 0;
 
       button {
         @include mixins.btn(var.$primary, var.$primary-hover);
-      }
-    }
-  }
-
-  /* Визуализация като картички */
-  & .card-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: var.$gap;
-    margin-bottom: var.$gap;
-
-    .card-item {
-      @include mixins.card();
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      background: var.$card-bg;
-
-      img {
-        width: 100%;
-        height: auto;
-        border-radius: var.$radius;
-        margin-bottom: var.$gap;
-      }
-
-      .title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: var.$gap / 2;
-      }
-
-      .subtitle {
-        font-size: 1rem;
-        color: var.$text-color-secondary;
-        margin-bottom: var.$gap;
-      }
-
-      .actions {
-        margin-top: auto;
-        display: flex;
-        gap: var.$gap / 2;
-
-        a,
-        button {
-          flex: 1;
-        }
-
-        .btn-danger {
-          @include mixins.btn(var.$danger, var.$danger-hover);
-        }
       }
     }
   }

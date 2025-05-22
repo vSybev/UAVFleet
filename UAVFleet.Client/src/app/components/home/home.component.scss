@@ -1,50 +1,57 @@
 @use 'variables' as var;
 @use 'mixins' as mixins;
-@use 'shared';
-@use 'card';
 
-.home-card {
-  text-align: center;
-  max-width: 800px;
-  margin: var.$gap auto;
-  img {
-    max-width: 100%;
-    height: auto;
-    border-radius: var.$radius;
-  }
+body {
+  background-color: transparent;
 }
-:host {
-  .home-container {
+
+.home-wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: transparent;
+
+  .home-content {
+    position: relative;
+    z-index: 5;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    text-align: center;
-    min-height: calc(100vh - 60px);
+    text-align: left;
     padding: var.$gap * 2;
+    height: 100vh;
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: var.$gap;
-      color: var.$dark;
-    }
-    p {
-      font-size: 1.25rem;
-      max-width: 600px;
-      line-height: 1.5;
-      margin-bottom: var.$gap * 2;
-    }
-    .drone-image {
-      max-width: 500px;
-      width: 100%;
+    .overlay {
+      @include mixins.card();
+      background: rgba(255, 255, 255, 0.9);
+      padding: var.$gap * 2;
       border-radius: var.$radius;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin-bottom: var.$gap * 2;
+      width: 30vw;
+      max-width: 350px;
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: var.$gap;
+      }
+
+      p {
+        flex: 1;
+        margin-bottom: var.$gap;
+      }
     }
-    .btn {
-      @include mixins.btn(var.$primary, var.$primary * 0.9);
-      font-size: 1.1rem;
-      padding: var.$gap / 1.5 var.$gap * 1.2;
+
+    img.man-vr {
+      position: fixed;
+      bottom: 0;
+      right: 10%;
+      height: 80vh;
+      width: 20vw;
+      z-index: 8;
     }
   }
 }

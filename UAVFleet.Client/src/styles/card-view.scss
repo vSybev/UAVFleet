@@ -7,7 +7,6 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: var.$gap;
   margin-bottom: var.$gap;
-  background-color: lightsteelblue;
 
   .card-item {
     @include mixins.card();

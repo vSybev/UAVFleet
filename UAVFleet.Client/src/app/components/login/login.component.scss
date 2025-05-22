@@ -1,59 +1,82 @@
 @use 'variables' as var;
 @use 'mixins' as mixins;
-@use 'card';
 @use 'form-shared';
 
-.login-card {
-  max-width: 400px;
-  margin: var.$gap auto;
-}
 :host {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  padding: var.$gap;
   background: var.$light;
+}
 
-  .login-form {
-    background: var.$bg-sheet;
-    padding: var.$gap * 2;
-    border-radius: var.$radius * 2;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    width: 320px;
+.login-card {
+  background: var.$bg-sheet;
+  border-radius: var.$radius * 2;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 360px;
+  padding: var.$gap * 2;
+  text-align: center;
 
-    h2 {
-      text-align: center;
+  .card-header {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var.$light;
+    margin-bottom: var.$gap * 1.5;
+  }
+
+  form.shared-form {
+    background: transparent;
+    padding: 0;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       margin-bottom: var.$gap * 1.5;
-      color: var.$primary;
-    }
 
-    .field {
-      margin-bottom: var.$gap;
       label {
-        display: block;
-        margin-bottom: var.$gap / 4;
+        font-size: 0.875rem;
         color: var.$text-color;
-        font-weight: 500;
+        margin-bottom: var.$gap / 2;
+        font-weight: 600;
+        width: 100%;
       }
+
       input {
         width: 100%;
-        padding: var.$gap / 2;
+        padding: var.$gap;
         border: 1px solid var.$border;
         border-radius: var.$radius;
+        font-size: 1rem;
+        background: #fff;
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &:focus {
+          border-color: var.$primary;
+          box-shadow: 0 0 0 3px rgba(var.$primary-hover, 0.3);
+          outline: none;
+        }
+      }
+
+      small {
+        color: var.$danger;
+        font-size: 0.75rem;
+        margin-top: var.$gap / 4;
       }
     }
 
-    .error {
-      color: var.$danger;
-      text-align: center;
-      margin-bottom: var.$gap;
-    }
+    .actions {
+      margin-top: var.$gap;
 
-    button {
-      width: 100%;
-      @include mixins.btn(var.$primary, var.$primary * 0.9);
-      font-size: 1rem;
-      padding: var.$gap / 2;
+      button.submit {
+        width: 100%;
+        @include mixins.btn(var.$primary, var.$primary-hover);
+        font-size: 1rem;
+        padding: var.$gap;
+      }
     }
   }
 }

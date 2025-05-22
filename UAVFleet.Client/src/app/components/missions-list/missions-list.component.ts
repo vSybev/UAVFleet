@@ -1,12 +1,12 @@
-import {Component, OnInit, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule, FormBuilder} from '@angular/forms';
-import {RouterLink, RouterLinkActive} from '@angular/router';
-import {MissionService, Mission} from '../../services/mission.service';
-import {DroneService, Drone} from '../../services/drone.service';
-import {OperatorService, Operator} from '../../services/operator.service';
-import {tap} from 'rxjs/operators';
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { RouterModule, RouterLink, RouterLinkActive } from '@angular/router';
+import { MissionService, Mission } from '../../services/mission.service';
+import { DroneService, Drone } from '../../services/drone.service';
+import { OperatorService, Operator } from '../../services/operator.service';
+import { tap } from 'rxjs/operators';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 export interface DisplayMission extends Mission {
   droneSerial: string;
@@ -14,11 +14,12 @@ export interface DisplayMission extends Mission {
 }
 
 @Component({
-  selector: 'app-mission-list',
+  selector: 'app-missions-list',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
     RouterLink,
     RouterLinkActive,
     FontAwesomeModule
@@ -26,31 +27,30 @@ export interface DisplayMission extends Mission {
   templateUrl: './missions-list.component.html',
   styleUrls: ['./missions-list.component.scss']
 })
-export class MissionListComponent implements OnInit {
-  private fb= inject(FormBuilder);
-  private missionSvc= inject(MissionService);
-  private droneSvc= inject(DroneService);
-  private opSvc= inject(OperatorService);
+export class MissionsListComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private missionSvc = inject(MissionService);
+  private droneSvc = inject(DroneService);
+  private opSvc = inject(OperatorService);
 
-  form= this.fb.group({
-    droneId:    this.fb.control('', { nonNullable: true }),
-    operatorId: this.fb.control('', { nonNullable: true })
-  });
-
+  form!: FormGroup;
   missions: DisplayMission[] = [];
-  drones:   Drone[] = [];
+  drones: Drone[] = [];
   operators: Operator[] = [];
   loading = false;
-  page= 1;
-  size= 10;
-  totalPages= 0;
+  page = 1;
+  size = 10;
+  totalPages = 0;
+  viewMode: 'table' | 'cards' = 'table';
 
   ngOnInit() {
-    this.droneSvc.list(1, 100, 'serialNumber', {})
-      .subscribe(p => this.drones = p.items);
+    this.form = this.fb.group({
+      droneId: [''],
+      operatorId: ['']
+    });
 
-    this.opSvc.list(1, 100, 'lastName', {})
-      .subscribe(p => this.operators = p.items);
+    this.droneSvc.list(1, 100).subscribe(p => this.drones = p.items);
+    this.opSvc.list(1, 100).subscribe(p => this.operators = p.items);
 
     this.form.valueChanges.subscribe(() => {
       this.page = 1;
@@ -60,15 +60,19 @@ export class MissionListComponent implements OnInit {
     this.load();
   }
 
+  toggleView() {
+    this.viewMode = this.viewMode === 'table' ? 'cards' : 'table';
+  }
+
   load() {
     this.loading = true;
-    const rawDrone    = this.form.controls.droneId.value;
-    const rawOperator = this.form.controls.operatorId.value;
-    const droneId     = rawDrone    ? Number(rawDrone)    : undefined;
-    const operatorId  = rawOperator ? Number(rawOperator) : undefined;
+    const { droneId, operatorId } = this.form.value;
 
-    this.missionSvc.list(this.page, this.size, 'startTime', { droneId, operatorId })
-      .pipe(tap(() => (this.loading = false)))
+    this.missionSvc.list(this.page, this.size, 'startTime', {
+      droneId: droneId ? Number(droneId) : undefined,
+      operatorId: operatorId ? Number(operatorId) : undefined
+    })
+      .pipe(tap(() => this.loading = false))
       .subscribe(res => {
         this.totalPages = res.totalPages;
         this.missions = res.items.map(m => {
@@ -76,8 +80,8 @@ export class MissionListComponent implements OnInit {
           const o = this.operators.find(x => x.operatorId === m.operatorId);
           return {
             ...m,
-            droneSerial:   d ? d.serialNumber : '',
-            operatorName:  o ? `${o.firstName} ${o.lastName}` : ''
+            droneSerial: d ? d.serialNumber : '',
+            operatorName: o ? `${o.firstName} ${o.lastName}` : ''
           };
         });
       });
@@ -99,7 +103,10 @@ export class MissionListComponent implements OnInit {
 
   delete(id: number) {
     if (!confirm('Сигурни ли сте, че искате да изтриете тази мисия?')) return;
-
     this.missionSvc.delete(id).subscribe(() => this.load());
+  }
+
+  getPlaceholderImage(): string {
+    return 'assets/images/mission-placeholder.png';
   }
 }

@@ -1,4 +1,4 @@
-<div class="card card--center login-card">
+<div class="login-card">
   <div class="card-header">Sign In</div>
   <div class="card-body">
     <form class="shared-form" [formGroup]="form" (ngSubmit)="submit()">
@@ -19,12 +19,11 @@
                placeholder="Enter password" />
       </div>
       <div class="actions">
-        <button type="submit"
-                class="submit"
-                [disabled]="form.invalid">
+        <button type="submit" class="submit" [disabled]="form.invalid">
           Sign In
         </button>
       </div>
     </form>
   </div>
 </div>
+

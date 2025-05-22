@@ -6,6 +6,7 @@ form.shared-form {
 
   .actions {
     justify-content: flex-end;
+    gap: var.$gap;
 
     button.submit {
       @include mixins.btn(var.$primary, var.$primary-hover);

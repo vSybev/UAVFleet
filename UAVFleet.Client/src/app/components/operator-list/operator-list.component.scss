@@ -1,54 +1,70 @@
 @use 'variables' as var;
-@use 'mixins' as mixins;
+@use 'mixins'    as mixins;
 @use 'shared';
 
 :host {
-  /* Card container */
-  @include mixins.card();
+  display: block;
+  max-width: 900px;
+  margin: var.$gap auto;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 
-  /* Header with title and add button */
-  & .card-header {
+  .card {
+    @include mixins.card();
+  }
+
+  .card-header {
+    background: transparent;
+    padding: 0 var.$gap var.$gap;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: var.$gap;
 
     h2 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.75rem;
       font-weight: 700;
     }
 
-    .add-button {
+    button {
+      margin-left: var.$gap;
       @include mixins.btn(var.$primary, var.$primary-hover);
     }
   }
 
-  /* Card body */
-  & .card-body {
+  .card-body {
+    background: transparent;
+    padding: 0;
+
     .filter-bar {
+      @include mixins.card();
+      padding: var.$gap;
+      margin-bottom: var.$gap;
+      background: transparent;
       display: flex;
       gap: var.$gap;
-      margin-bottom: var.$gap * 1.5;
 
-      input,
-      select {
+      input {
         padding: var.$gap / 2;
         border: 1px solid var.$border;
         border-radius: var.$radius;
       }
     }
 
-    .operator-table {
+    table {
       width: 100%;
+      max-width: 800px;
+      margin: 0 auto var.$gap;
       border-collapse: collapse;
-      margin-bottom: var.$gap;
+      background: transparent;
 
       th,
       td {
         border: 1px solid var.$border;
         padding: var.$gap / 2;
         text-align: left;
+        background: transparent;
       }
 
       th {
@@ -60,9 +76,63 @@
         background-color: var.$light;
       }
 
-      tr:hover {
-        background-color: var.$secondary;
+      tbody tr:hover {
+        background-color: var.$row-hover-bg;
         color: #fff;
+      }
+    }
+
+    .card-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: var.$gap;
+      margin: 0 auto var.$gap;
+      max-width: 800px;
+
+      .card-item {
+        @include mixins.card();
+        background: var.$card-bg;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        img {
+          width: 100%;
+          height: auto;
+          border-radius: var.$radius;
+          margin-bottom: var.$gap;
+        }
+
+        .title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin-bottom: var.$gap / 2;
+        }
+
+        .subtitle {
+          font-size: 1rem;
+          color: var.$text-color-secondary;
+          margin-bottom: var.$gap;
+        }
+
+        .actions {
+          margin-top: auto;
+          display: flex;
+          gap: var.$gap / 2;
+
+          a,
+          button {
+            flex: 1;
+            background: transparent;
+            color: var.$text-color;
+            border: 1px solid var.$border;
+          }
+
+          .btn-danger {
+            @include mixins.btn(var.$danger, var.$danger-hover);
+          }
+        }
       }
     }
 
@@ -71,7 +141,7 @@
       align-items: center;
       justify-content: center;
       gap: var.$gap;
-      margin-top: var.$gap;
+      margin: var.$gap auto 0;
 
       button {
         @include mixins.btn(var.$primary, var.$primary-hover);

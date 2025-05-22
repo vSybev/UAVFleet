@@ -1,40 +1,42 @@
 <div class="card mission-list">
   <div class="card-header">
     <h2>Missions</h2>
-    <button routerLink="/missions/new"
-            class="btn-primary">
-      <fa-icon icon="plus"></fa-icon>
-      New Mission
+    <button (click)="toggleView()" class="btn-secondary">
+      <fa-icon [icon]="viewMode === 'table' ? 'th-large' : 'th-list'"></fa-icon>
+    </button>
+    <button routerLink="/missions/new" class="btn-primary">
+      <fa-icon icon="plus"></fa-icon> New Mission
     </button>
   </div>
   <div class="card-body">
-    <div class="filter-bar">
-      <select [formControl]="form.controls.droneId">
+    <form [formGroup]="form" class="filter-bar">
+      <select formControlName="droneId">
         <option value="">All drones</option>
         <option *ngFor="let d of drones"
-                [value]="d.droneId">
-          {{ d.serialNumber }}</option>
+                [value]="d.droneId">{{ d.serialNumber }}</option>
       </select>
-      <select [formControl]="form.controls.operatorId">
+      <select formControlName="operatorId">
         <option value="">All operators</option>
         <option *ngFor="let o of operators"
-                [value]="o.operatorId">
-          {{ o.firstName }} {{ o.lastName }}</option>
+                [value]="o.operatorId">{{ o.firstName }} {{ o.lastName }}</option>
       </select>
-    </div>
+    </form>
+
     <div *ngIf="loading" class="loading">Loading…</div>
-    <table *ngIf="!loading">
+
+    <!-- Table View -->
+    <table *ngIf="!loading && viewMode === 'table'">
       <thead>
-        <tr>
-          <th>ID</th>
-          <th>Drone</th>
-          <th>Operator</th>
-          <th>Start</th>
-          <th>End</th>
-          <th>Objective</th>
-          <th>Result</th>
-          <th>Actions</th>
-        </tr>
+      <tr>
+        <th>ID</th>
+        <th>Drone</th>
+        <th>Operator</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Objective</th>
+        <th>Result</th>
+        <th>Actions</th>
+      </tr>
       </thead>
       <tbody>
         <tr *ngFor="let m of missions">
@@ -42,24 +44,40 @@
           <td>{{ m.droneSerial }}</td>
           <td>{{ m.operatorName }}</td>
           <td>{{ m.startTime | date:'short' }}</td>
-          <td>{{ m.endTime   | date:'short' }}</td>
+          <td>{{ m.endTime | date:'short' }}</td>
           <td>{{ m.objective }}</td>
           <td>{{ m.result }}</td>
           <td class="actions">
-            <a [routerLink]="['/missions', m.missionId]" class="btn-secondary">Edit</a>
-            <button (click)="delete(m.missionId)" class="btn-danger">Delete</button>
+            <a [routerLink]="['/missions', m.missionId]" class="btn-secondary">
+              <fa-icon icon="file-edit"></fa-icon>
+            </a>
+            <button (click)="delete(m.missionId)"
+                    class="btn-danger"
+                    style="margin-left: 10px">
+              <fa-icon icon="trash-can"></fa-icon>
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <!-- Card View -->
+    <div class="card-list" *ngIf="!loading && viewMode === 'cards'">
+      <div class="card-item" *ngFor="let m of missions">
+        <img [src]="getPlaceholderImage()" alt="Mission" />
+        <div class="title">{{ m.droneSerial }} &ndash; {{ m.operatorName }}</div>
+        <div class="subtitle">{{ m.startTime | date:'short' }} to {{ m.endTime | date:'short' }}</div>
+        <div class="actions">
+          <a [routerLink]="['/missions', m.missionId]" class="btn-primary">Edit</a>
+          <button (click)="delete(m.missionId)" class="btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+
     <div class="pagination">
-      <button (click)="prev()"
-              [disabled]="page===1">
-        Prev</button>
-      <span> Page {{ page }} of {{ totalPages }} </span>
-      <button (click)="next()"
-              [disabled]="page===totalPages">
-        Next</button>
+      <button (click)="prev()" [disabled]="page===1">Prev</button>
+      <span>Page {{ page }} of {{ totalPages }}</span>
+      <button (click)="next()" [disabled]="page===totalPages">Next</button>
     </div>
   </div>
 </div>
