@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { RouterModule, RouterLink, RouterLinkActive } from '@angular/router';
 import { MissionService, Mission } from '../../services/mission.service';
@@ -22,7 +22,8 @@ export interface DisplayMission extends Mission {
     RouterModule,
     RouterLink,
     RouterLinkActive,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgOptimizedImage
   ],
   templateUrl: './missions-list.component.html',
   styleUrls: ['./missions-list.component.scss']
@@ -107,6 +108,6 @@ export class MissionsListComponent implements OnInit {
   }
 
   getPlaceholderImage(): string {
-    return 'assets/images/mission-placeholder.png';
+    return 'assets/images/top_secret.png';
   }
 }

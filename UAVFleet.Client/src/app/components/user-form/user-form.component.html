@@ -1,0 +1,57 @@
+<div class="card user-form">
+  <div class="card-header">
+    <h2>{{ id ? 'Edit User' : 'New User' }}</h2>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input id="username" formControlName="username" />
+        <small *ngIf="form.get('username')?.invalid && form.get('username')?.touched">
+          Required, up to 50 chars
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input id="firstName" formControlName="firstName" />
+        <small *ngIf="form.get('firstName')?.invalid && form.get('firstName')?.touched">
+          Required, up to 50 chars
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input id="lastName" formControlName="lastName" />
+        <small *ngIf="form.get('lastName')?.invalid && form.get('lastName')?.touched">
+          Required, up to 50 chars
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" />
+        <small *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+          Valid email required
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="role">Role</label>
+        <select id="role" formControlName="role">
+          <option value="">— Select role —</option>
+          <option value="Admin">Admin</option>
+          <option value="User">User</option>
+        </select>
+        <small *ngIf="form.get('role')?.invalid && form.get('role')?.touched">
+          Required
+        </small>
+      </div>
+      <div class="actions">
+        <button type="submit" class="btn-primary" [disabled]="form.invalid || loading">
+          {{ id ? 'Save' : 'Create' }}
+        </button>
+        <button type="button" class="btn-secondary" (click)="cancel()" [disabled]="loading">
+          Cancel
+        </button>
+      </div>
+      <div *ngIf="loading" class="loading">Saving…</div>
+    </form>
+  </div>
+</div>

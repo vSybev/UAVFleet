@@ -1,65 +1,76 @@
-$primary:               #4a90e2;
-$primary-hover:         darken($primary, 10%);
-$secondary:             #50e3c2;
-$secondary-hover:       darken($secondary, 5%);
-$success:               #7ed321;
-$success-hover:         darken($success, 10%);
-$info:                  #9013fe;
-$warning:               #f5a623;
-$danger:                #d0021b;
-$danger-hover:          darken($danger, 10%);
-$light:                 #f7f9fc;
-$dark:                  #1f1f1f;
+@use 'sass:color';
 
-// Нов цвят lightsteelblue за фон на карти, меню и hover на таблица
-$lightsteelblue:        #b0c4de;
+$lightsteelblue:  #b0c4de;
+$primary:         #007bff;
+$primary-hover:   color.scale($primary, $lightness: -10%);
+$secondary:       #6c757d;
+$secondary-hover: color.scale($secondary, $lightness: -10%);
+$success:         #28a745;
+$success-hover:   color.scale($success, $lightness: -10%);
+$danger:          #dc3545;
+$danger-hover:    color.scale($danger, $lightness: -10%);
+$accent:          #ff9800;
+$accent-hover:    color.scale($accent, $lightness: -10%);
+$dark:            #121212;
+$light:           #f8f9fa;
+$border:          #dee2e6;
+$row-hover-bg:    $lightsteelblue;
+$surface:         #ffffff;
+$text-dark:       #343a40;
+$text-light:      #e0e0e0;
+$icon:            #888;
+$field-bg:        #f3f3f3;
 
-$body-bg:               $light;
-$text-color:            #333333;
-$text-color-secondary:  #656f7a;
-$bg-sheet:              #ffffff; // оставяме за други panel фонове
-$card-bg:               $lightsteelblue; // фон на картички
-$menu-bg:               $lightsteelblue; // фон на меню
-$row-hover-bg:          $lightsteelblue; // hover фон на таблица
-
-$border:                #e1e8f2;
-
-$font-family:           'Roboto', sans-serif;
-
-$gap:                   1rem;
-$radius:                0.5rem;
-
-$breakpoint-sm:         576px;
-$breakpoint-md:         768px;
-$breakpoint-lg:         992px;
-$breakpoint-xl:         1200px;
+$gap:             1rem;
+$radius:          0.25rem;
+$font-family:     'Roboto', sans-serif;
 
 :root {
-  --color-bg:             #ffffff;
-  --color-surface:        #fafbfd;
-  --color-border:         #e1e8f2;
-  --color-text:           #333333;
-  --color-text-secondary: #656f7a;
-  --color-primary:        #{$primary};
-  --color-primary-hover:  #{$primary-hover};
-  --color-accent:         #{$danger};
-  --color-accent-hover:   #{$danger-hover};
-  --color-success:        #{$success};
-  --color-success-hover:  #{$success-hover};
-  --color-alt:            #{$lightsteelblue};
+  --color-bg:               #{$light};
+  --color-surface:          #{$surface};
+  --color-surface-alt:      #BCCCDC;
+  --color-border:           #{$border};
+  --color-text:             #{$text-dark};
+  --color-text-secondary:   #{color.scale($text-dark, $lightness: -30%)};
+  --color-primary:          #{$primary};
+  --color-primary-hover:    #{$primary-hover};
+  --color-secondary:        #{$secondary};
+  --color-secondary-hover:  #{$secondary-hover};
+  --color-success:          #{$success};
+  --color-success-hover:    #{$success-hover};
+  --color-danger:           #{$danger};
+  --color-danger-hover:     #{$danger-hover};
+  --color-accent:           #{$accent};
+  --color-accent-hover:     #{$accent-hover};
+  --color-icon:             #444;
+  --color-header-bg:        #BCCCDC;
+  --color-field-bg:         #{$field-bg};
+  --color-alt:              #{color.mix($primary, $surface, 10%)};
 }
 
 .dark-theme {
-  --color-bg:             #121212;
-  --color-surface:        #1e1e1e;
-  --color-border:         #333333;
-  --color-text:           #e0e0e0;
-  --color-text-secondary:#a0a0a0;
-  --color-primary:        #90caf9;
-  --color-primary-hover:  #64b5f6;
-  --color-accent:         #f48fb1;
-  --color-accent-hover:   #f06292;
-  --color-success:        #81c784;
-  --color-success-hover:  #66bb6a;
-  --color-alt:            #b0c4de;
+  --color-bg:               #121212;
+  --color-surface:          #1e1e1e;
+  --color-surface-alt:      #2A4759;
+  --color-border:           #333333;
+  --color-text:             #e0e0e0;
+  --color-text-secondary:   #a0a0a0;
+  --color-primary:          #4dabf7;
+  --color-primary-hover:    #339af0;
+  --color-secondary:        #868e96;
+  --color-secondary-hover:  #495057;
+  --color-success:          #51cf66;
+  --color-success-hover:    #40c057;
+  --color-danger:           #ff6b6b;
+  --color-danger-hover:     #fa5252;
+  --color-accent:           #ffa94d;
+  --color-accent-hover:     #ff922b;
+  --color-icon:             #ccc;
+  --color-header-bg:        #2A4759;
+  --color-field-bg:         #2c2c2c;
+  --color-alt:              #333;
+}
+
+@function c($key) {
+  @return var(--color-#{$key});
 }

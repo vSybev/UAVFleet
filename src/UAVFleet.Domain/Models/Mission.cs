@@ -1,5 +1,4 @@
-﻿// src/UAVFleet.Domain/Models/Mission.cs
-using System;
+﻿using System;
 
 namespace UAVFleet.Domain.Models
 {
@@ -12,8 +11,6 @@ namespace UAVFleet.Domain.Models
         public DateTime EndTime { get; set; }
         public string Objective { get; set; } = null!;
         public string Result { get; set; } = null!; // planned, completed, failed
-
-        // Навигационни свойства
         public Drone? Drone { get; set; }
         public Operator? Operator { get; set; }
     }

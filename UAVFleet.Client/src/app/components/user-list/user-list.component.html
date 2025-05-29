@@ -1,0 +1,46 @@
+<div class="card user-list">
+  <div class="card-header">
+    <h2>Users</h2>
+    <a routerLink="/users/new" class="btn-primary">
+      <fa-icon [icon]="faPlus"></fa-icon>
+      Add User
+    </a>
+  </div>
+
+  <div class="card-body">
+    <div *ngIf="loading" class="loading">Loading…</div>
+
+    <table *ngIf="!loading && users.length">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let u of users">
+        <td>{{ u.id }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.firstName }}</td>
+        <td>{{ u.lastName }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.role }}</td>
+        <td class="actions">
+          <button (click)="deleteUser(u.id)" class="btn-danger">
+            <fa-icon [icon]="faTrash"></fa-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="!loading && !users.length" class="loading">
+      No users found.
+    </div>
+  </div>
+</div>

@@ -1,57 +1,73 @@
 <form class="shared-form" [formGroup]="form" (ngSubmit)="submit()">
-  <div *ngIf="form.errors?.['endBeforeStart']" class="error mb-4">
+  <!-- Групова грешка за поредността на датите -->
+  <div *ngIf="form.hasError('endBeforeStart')" class="error mb-4">
     Крайната дата/час трябва да е след началната!
   </div>
 
-  <!--Drone-->
+  <!-- Drone -->
   <div class="form-group">
     <label for="droneId">Drone</label>
-    <select id="droneId"
-            formControlName="droneId">
+    <select id="droneId" formControlName="droneId">
       <option value="">— Select drone —</option>
-      <option *ngFor="let d of drones"
-              [value]="d.droneId">
-        {{ d.serialNumber }}</option>
+      <option *ngFor="let d of drones" [value]="d.droneId">
+        {{ d.serialNumber }}
+      </option>
     </select>
-    <small *ngIf="form.get('droneId')?.invalid && form.get('droneId')?.touched">Required</small>
+    <small *ngIf="form.get('droneId')?.hasError('required') && form.get('droneId')?.touched">
+      Required
+    </small>
   </div>
-  <!--Operator-->
+
+  <!-- Operator -->
   <div class="form-group">
     <label for="operatorId">Operator</label>
     <select id="operatorId" formControlName="operatorId">
       <option value="">— Select operator —</option>
-      <option *ngFor="let o of operators"
-              [value]="o.operatorId">
-        {{ o.firstName }} {{ o.lastName }}</option>
+      <option *ngFor="let o of operators" [value]="o.operatorId">
+        {{ o.firstName }} {{ o.lastName }}
+      </option>
     </select>
-    <small *ngIf="form.get('operatorId')?.invalid && form.get('operatorId')?.touched">Required</small>
+    <small *ngIf="form.get('operatorId')?.hasError('required') && form.get('operatorId')?.touched">
+      Required
+    </small>
   </div>
-  <!--Start Time-->
+
+  <!-- Start Time -->
   <div class="form-group">
     <label for="startTime">Start Time</label>
-    <input id="startTime"
-           type="datetime-local"
-           formControlName="startTime" />
-    <small *ngIf="form.get('startTime')?.invalid && form.get('startTime')?.touched">Required &lt; end time</small>
+    <input id="startTime" type="datetime-local" formControlName="startTime" />
+    <small *ngIf="form.get('startTime')?.hasError('required') && form.get('startTime')?.touched">
+      Required
+    </small>
   </div>
-  <!--End Time-->
+
+  <!-- End Time -->
   <div class="form-group">
     <label for="endTime">End Time</label>
-    <input id="endTime"
-           type="datetime-local"
-           formControlName="endTime" />
-    <small *ngIf="form.get('endTime')?.invalid && form.get('endTime')?.touched">Required &gt; start time</small>
+    <input id="endTime" type="datetime-local" formControlName="endTime" />
+    <small *ngIf="form.get('endTime')?.hasError('required') && form.get('endTime')?.touched">
+      Required
+    </small>
   </div>
-  <!--Objective-->
+
+  <!-- Objective -->
   <div class="form-group">
     <label for="objective">Objective</label>
-    <textarea id="objective"
-              formControlName="objective"
-              rows="3"
-              placeholder="Describe mission objective"></textarea>
-    <small *ngIf="form.get('objective')?.invalid && form.get('objective')?.touched">Required, max 500 chars</small>
+    <textarea
+      id="objective"
+      formControlName="objective"
+      rows="3"
+      placeholder="Describe mission objective">
+    </textarea>
+    <small *ngIf="form.get('objective')?.hasError('required') && form.get('objective')?.touched">
+      Required
+    </small>
+    <small *ngIf="form.get('objective')?.hasError('maxlength') && form.get('objective')?.touched">
+      Max 500 chars
+    </small>
   </div>
-  <!--Result-->
+
+  <!-- Result -->
   <div class="form-group">
     <label for="result">Result</label>
     <select id="result" formControlName="result">
@@ -60,9 +76,12 @@
       <option value="completed">Completed</option>
       <option value="failed">Failed</option>
     </select>
-    <small *ngIf="form.get('result')?.invalid && form.get('result')?.touched">Required</small>
+    <small *ngIf="form.get('result')?.hasError('required') && form.get('result')?.touched">
+      Required
+    </small>
   </div>
-  <!--Actions-->
+
+  <!-- Actions -->
   <div class="actions">
     <button type="submit"
             class="submit"

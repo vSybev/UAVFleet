@@ -2,55 +2,94 @@
   <!-- Serial Number -->
   <div class="form-group">
     <label for="serialNumber">Serial Number</label>
-    <input id="serialNumber"
-           formControlName="serialNumber"
-           placeholder="e.g. SN-12345" />
-    <small *ngIf="form.get('serialNumber')?.invalid && form.get('serialNumber')?.touched">
-      Required, max 50 chars
+    <input
+      id="serialNumber"
+      formControlName="serialNumber"
+      placeholder="e.g. SN-12345"
+    />
+    <small *ngIf="form.get('serialNumber')?.hasError('required') && form.get('serialNumber')?.touched">
+      Required
+    </small>
+    <small *ngIf="form.get('serialNumber')?.hasError('maxlength') && form.get('serialNumber')?.touched">
+      Max 50 characters
+    </small>
+    <small *ngIf="form.get('serialNumber')?.hasError('pattern') && form.get('serialNumber')?.touched">
+      Only letters, numbers and hyphens
     </small>
   </div>
+
   <!-- Manufacturer -->
   <div class="form-group">
     <label for="manufacturer">Manufacturer</label>
-    <input id="manufacturer"
-           formControlName="manufacturer"
-           placeholder="e.g. DJI" />
-    <small *ngIf="form.get('manufacturer')?.invalid && form.get('manufacturer')?.touched">
-      Required, max 100 chars
+    <input
+      id="manufacturer"
+      formControlName="manufacturer"
+      placeholder="e.g. DJI"
+    />
+    <small *ngIf="form.get('manufacturer')?.hasError('required') && form.get('manufacturer')?.touched">
+      Required
+    </small>
+    <small *ngIf="form.get('manufacturer')?.hasError('maxlength') && form.get('manufacturer')?.touched">
+      Max 100 characters
+    </small>
+    <small *ngIf="form.get('manufacturer')?.hasError('pattern') && form.get('manufacturer')?.touched">
+      Invalid characters
     </small>
   </div>
+
   <!-- Model -->
   <div class="form-group">
     <label for="model">Model</label>
-    <input id="model"
-           formControlName="model"
-           placeholder="e.g. Phantom 4" />
-    <small *ngIf="form.get('model')?.invalid && form.get('model')?.touched">
-      Required, max 100 chars
+    <input
+      id="model"
+      formControlName="model"
+      placeholder="e.g. Phantom 4"
+    />
+    <small *ngIf="form.get('model')?.hasError('required') && form.get('model')?.touched">
+      Required
+    </small>
+    <small *ngIf="form.get('model')?.hasError('maxlength') && form.get('model')?.touched">
+      Max 100 characters
+    </small>
+    <small *ngIf="form.get('model')?.hasError('pattern') && form.get('model')?.touched">
+      Invalid characters
     </small>
   </div>
-  <!-- Payload -->
+
+  <!-- Payload Capacity -->
   <div class="form-group">
     <label for="payloadCapacity">Payload Capacity (kg)</label>
-    <input id="payloadCapacity"
-           type="number"
-           formControlName="payloadCapacity"
-           min="0" />
-    <small *ngIf="form.get('payloadCapacity')?.invalid && form.get('payloadCapacity')?.touched">
-      Must be &ge; 0
+    <input
+      id="payloadCapacity"
+      type="number"
+      formControlName="payloadCapacity"
+      min="0"
+    />
+    <small *ngIf="form.get('payloadCapacity')?.hasError('required') && form.get('payloadCapacity')?.touched">
+      Required
+    </small>
+    <small *ngIf="form.get('payloadCapacity')?.hasError('min') && form.get('payloadCapacity')?.touched">
+      Must be ≥ 0
     </small>
   </div>
+
   <!-- Service Date -->
   <div class="form-group">
     <label for="serviceDate">Last Service Date</label>
-    <input id="serviceDate"
-           type="date"
-           formControlName="serviceDate"
-           max="{{ today | date:'yyyy-MM-dd' }}" />
-    <small *ngIf="form.get('serviceDate')?.invalid && form.get('serviceDate')?.touched">
+    <input
+      id="serviceDate"
+      type="date"
+      formControlName="serviceDate"
+      max="{{ today }}"
+    />
+    <small *ngIf="form.get('serviceDate')?.hasError('required') && form.get('serviceDate')?.touched">
+      Required
+    </small>
+    <small *ngIf="form.get('serviceDate')?.hasError('futureDate') && form.get('serviceDate')?.touched">
       Cannot be in the future
     </small>
   </div>
+
   <!-- Status -->
   <div class="form-group">
     <label for="status">Status</label>
@@ -60,17 +99,16 @@
       <option value="in_mission">In Mission</option>
       <option value="maintenance">Maintenance</option>
     </select>
-    <small *ngIf="form.get('status')?.invalid && form.get('status')?.touched">
+    <small *ngIf="form.get('status')?.hasError('required') && form.get('status')?.touched">
       Must choose a status
     </small>
   </div>
+
   <!-- Actions -->
   <div class="actions">
-    <button type="submit"
-            class="submit"
-            [disabled]="form.invalid">{{ id ? 'Save' : 'Create' }}</button>
-    <button type="button"
-            class="cancel"
-            (click)="cancel()">Cancel</button>
+    <button type="submit" class="submit" [disabled]="form.invalid">
+      {{ id ? 'Save' : 'Create' }}
+    </button>
+    <button type="button" class="cancel" (click)="cancel()">Cancel</button>
   </div>
 </form>

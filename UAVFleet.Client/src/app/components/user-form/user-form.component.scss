@@ -1,0 +1,75 @@
+@use 'variables' as var;
+@use 'mixins'    as mixins;
+
+.user-form {
+  max-width: 600px;
+  margin: var.$gap auto;
+
+  .card {
+    @include mixins.card();
+    background: var.c('surface');
+  }
+
+  .card-header {
+    padding-bottom: var.$gap / 2;
+    border-bottom: 1px solid var.c('border');
+    margin-bottom: var.$gap;
+    h2 { margin: 0; }
+  }
+
+  .card-body {
+    background: var.c('surface');
+    padding: var.$gap;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: var.$gap * 1.5;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          font-weight: 600;
+          margin-bottom: var.$gap / 2;
+          color: var.c('text');
+        }
+
+        input, select {
+          padding: var.$gap / 2;
+          border: 1px solid var.c('border');
+          border-radius: var.$radius;
+          background: var.c('field-bg');
+          color: var.c('text');
+          transition: border-color 0.2s;
+
+          &:focus {
+            border-color: var.c('primary');
+            outline: none;
+          }
+        }
+
+        small {
+          color: var.c('accent');
+          margin-top: var.$gap / 4;
+        }
+      }
+
+      .actions {
+        display: flex;
+        gap: var.$gap;
+        button {
+          padding: var.$gap / 2 var.$gap;
+        }
+      }
+    }
+
+    .loading {
+      text-align: center;
+      font-style: italic;
+      color: var.c('text-secondary');
+      margin-top: var.$gap;
+    }
+  }
+}

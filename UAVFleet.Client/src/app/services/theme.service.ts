@@ -12,7 +12,6 @@ export class ThemeService {
   enableDarkTheme(enabled: boolean) {
     const method = enabled ? 'addClass' : 'removeClass';
     this.renderer[method](document.body, this.darkClass);
-    // Опционално: запази избора в localStorage
     localStorage.setItem('darkTheme', enabled ? '1' : '0');
   }
 

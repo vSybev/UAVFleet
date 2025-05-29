@@ -1,56 +1,111 @@
 <form class="shared-form" [formGroup]="form" (ngSubmit)="submit()">
+  <!-- First Name -->
   <div class="form-group">
     <label for="firstName">First Name</label>
-    <input id="firstName"
-           formControlName="firstName"
-           placeholder="e.g. John" />
-    <small *ngIf="form.get('firstName')?.invalid && form.get('firstName')?.touched">Required, max 50 chars</small>
+    <input id="firstName" formControlName="firstName" placeholder="e.g. John" />
+    <small *ngIf="form.get('firstName')?.hasError('required') && form.get('firstName')?.touched">
+      Required
+    </small>
+    <small *ngIf="form.get('firstName')?.hasError('minlength') && form.get('firstName')?.touched">
+      At least 2 characters
+    </small>
+    <small *ngIf="form.get('firstName')?.hasError('maxlength') && form.get('firstName')?.touched">
+      Max 50 characters
+    </small>
+    <small *ngIf="form.get('firstName')?.hasError('pattern') && form.get('firstName')?.touched">
+      Only letters, spaces and hyphens
+    </small>
   </div>
+
+  <!-- Last Name -->
   <div class="form-group">
     <label for="lastName">Last Name</label>
-    <input id="lastName"
-           formControlName="lastName"
-           placeholder="e.g. Doe" />
-    <small *ngIf="form.get('lastName')?.invalid && form.get('lastName')?.touched">Required, max 50 chars</small>
+    <input id="lastName" formControlName="lastName" placeholder="e.g. Doe" />
+    <small *ngIf="form.get('lastName')?.hasError('required') && form.get('lastName')?.touched">
+      Required
+    </small>
+    <small *ngIf="form.get('lastName')?.hasError('minlength') && form.get('lastName')?.touched">
+      At least 2 characters
+    </small>
+    <small *ngIf="form.get('lastName')?.hasError('maxlength') && form.get('lastName')?.touched">
+      Max 50 characters
+    </small>
+    <small *ngIf="form.get('lastName')?.hasError('pattern') && form.get('lastName')?.touched">
+      Only letters, spaces and hyphens
+    </small>
   </div>
+
+  <!-- Phone -->
   <div class="form-group">
     <label for="phone">Phone</label>
-    <input id="phone"
-           formControlName="phone"
-           placeholder="+359 88 123 4567" />
-    <small *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched">Required, max 20 chars</small>
+    <input id="phone" formControlName="phone" placeholder="+359 88 123 4567" />
+    <small *ngIf="form.get('phone')?.hasError('required') && form.get('phone')?.touched">
+      Required
+    </small>
+    <small *ngIf="form.get('phone')?.hasError('maxlength') && form.get('phone')?.touched">
+      Max 20 characters
+    </small>
+    <small *ngIf="form.get('phone')?.hasError('pattern') && form.get('phone')?.touched">
+      Invalid format (9–20 digits, “+” and spaces only)
+    </small>
   </div>
+
+  <!-- License Number -->
   <div class="form-group">
     <label for="licenseNumber">License Number</label>
-    <input id="licenseNumber"
-           formControlName="licenseNumber"
-           placeholder="e.g. LIC-98765" />
-    <small *ngIf="form.get('licenseNumber')?.invalid && form.get('licenseNumber')?.touched">Required, max 50 chars</small>
+    <input id="licenseNumber" formControlName="licenseNumber" placeholder="e.g. LIC-98765" />
+    <small *ngIf="form.get('licenseNumber')?.hasError('required') && form.get('licenseNumber')?.touched">
+      Required
+    </small>
+    <small *ngIf="form.get('licenseNumber')?.hasError('maxlength') && form.get('licenseNumber')?.touched">
+      Max 50 characters
+    </small>
+    <small *ngIf="form.get('licenseNumber')?.hasError('pattern') && form.get('licenseNumber')?.touched">
+      Only letters, numbers, hyphens; 5–50 chars
+    </small>
   </div>
+
+  <!-- Hired Date -->
   <div class="form-group">
     <label for="hiredDate">Hired Date</label>
-    <input id="hiredDate"
-           type="date"
-           formControlName="hiredDate"
-           max="{{ today | date:'yyyy-MM-dd' }}" />
-    <small *ngIf="form.get('hiredDate')?.invalid && form.get('hiredDate')?.touched">Required</small>
+    <input
+      id="hiredDate"
+      type="date"
+      formControlName="hiredDate"
+      max="{{ today }}"
+    />
+    <small *ngIf="form.get('hiredDate')?.hasError('required') && form.get('hiredDate')?.touched">
+      Required
+    </small>
+    <small *ngIf="form.get('hiredDate')?.hasError('futureDate') && form.get('hiredDate')?.touched">
+      Date cannot be in the future
+    </small>
   </div>
+
+  <!-- Notes -->
   <div class="form-group">
     <label for="notes">Notes</label>
-    <textarea id="notes"
-              formControlName="notes"
-              rows="4"
-              placeholder="Optional notes (max 500 chars)"></textarea>
-    <small *ngIf="form.get('notes')?.invalid && form.get('notes')?.touched">Max 500 chars</small>
+    <textarea
+      id="notes"
+      formControlName="notes"
+      rows="4"
+      placeholder="Optional notes (10–500 chars)"
+    ></textarea>
+    <small *ngIf="form.get('notes')?.hasError('minlength') && form.get('notes')?.touched">
+      At least 10 characters
+    </small>
+    <small *ngIf="form.get('notes')?.hasError('maxlength') && form.get('notes')?.touched">
+      Max 500 characters
+    </small>
   </div>
+
+  <!-- Actions -->
   <div class="actions">
-    <button type="submit"
-            class="submit"
-            [disabled]="form.invalid">
-      {{ id ? 'Save' : 'Create' }}</button>
-    <button type="button"
-            class="cancel"
-            (click)="cancel()">
-      Cancel</button>
+    <button type="submit" class="submit" [disabled]="form.invalid">
+      {{ id ? 'Save' : 'Create' }}
+    </button>
+    <button type="button" class="cancel" (click)="cancel()">
+      Cancel
+    </button>
   </div>
 </form>

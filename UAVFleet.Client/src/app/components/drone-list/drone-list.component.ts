@@ -80,10 +80,10 @@ export class DroneListComponent implements OnInit {
 
   getDroneImage(type: string): string {
     switch(type) {
-      case 'Phantom 4': return 'assets/images/drone-video.png';
-      case 'Anafi': return 'assets/images/drone-delivery.png';
-      case 'Evo II': return 'assets/images/drone-spraying.png';
-      default: return 'assets/images/drone-shadow.png';
+      case 'Phantom 4': return 'assets/images/drones_images/video.png';
+      case 'Anafi': return 'assets/images/drones_images/delivery.png';
+      case 'Evo II': return 'assets/images/drones_images/spraying.png';
+      default: return 'assets/images/drones_images/just_drone.png';
     }
   }
 }

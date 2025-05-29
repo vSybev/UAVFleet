@@ -105,5 +105,8 @@
       }
     }
   },
-  "defaultProject": "uavfleet-client"
+  "defaultProject": "uavfleet-client",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,5 +1,4 @@
-﻿// src/UAVFleet.Domain/Models/Drone.cs
-using System;
+﻿using System;
 
 namespace UAVFleet.Domain.Models
 {

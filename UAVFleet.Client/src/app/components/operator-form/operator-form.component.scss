@@ -1,9 +1,13 @@
 @use 'variables' as var;
-@use 'mixins' as mixins;
+@use 'mixins'    as mixins;
 @use 'form-shared';
 
 :host {
   @include mixins.form-container(500px);
+
+  form.shared-form {
+    grid-template-columns: 150px 1fr;
+  }
 
   h1 {
     margin-bottom: var.$gap * 1.5;

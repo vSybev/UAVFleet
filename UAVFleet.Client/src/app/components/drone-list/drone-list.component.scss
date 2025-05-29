@@ -1,19 +1,23 @@
 @use 'variables' as var;
-@use 'mixins'    as mixins;
+@use 'mixins' as mixins;
 @use 'shared';
 
 :host {
   display: block;
   max-width: 900px;
   margin: var.$gap auto;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  background: var.c('bg');
+  color: var.c('text');
 
-  /* Header without background */
+  .card {
+    @include mixins.card();
+    background: var.c('surface-alt');
+  }
+
   .card-header {
-    background: transparent;
-    padding: 0 var.$gap var.$gap;
+    background: var.c('surface-alt');
+    color: var.c('text');
+    padding: var.$gap;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -22,65 +26,65 @@
       margin: 0;
       font-size: 1.75rem;
       font-weight: 700;
+      color: var.c('text');
     }
 
     button {
       margin-left: var.$gap;
+      @include mixins.btn(var.c('primary'), var.c('primary-hover'));
     }
   }
 
-  /* Body with narrower table container */
   .card-body {
-    background: transparent;
+    background: var.c('bg');
     padding: 0;
 
-    /* Filter bar styling */
     .filter-bar {
       @include mixins.card();
+      background: var.c('surface-alt');
       padding: var.$gap;
       margin-bottom: var.$gap;
-      background: transparent;
+      display: flex;
+      gap: var.$gap;
 
-      input,
-      select {
+      input, select {
         padding: var.$gap / 2;
-        border: 1px solid var.$border;
+        border: 1px solid var.c('border');
         border-radius: var.$radius;
+        background: var.c('field-bg');
+        color: var.c('text');
       }
     }
 
-    /* Table view */
     table {
       width: 100%;
       max-width: 800px;
       margin: 0 auto var.$gap;
       border-collapse: collapse;
-      background: transparent;
+      background: var.c('bg');
+      color: var.c('text');
 
-      th,
-      td {
-        border: 1px solid var.$border;
+      th, td {
+        border: 1px solid var.c('border');
         padding: var.$gap / 2;
         text-align: left;
-        background: transparent;
       }
 
       th {
-        background-color: var.$light;
+        background: var.c('surface-alt');
         font-weight: 600;
       }
 
       tr:nth-child(even) {
-        background-color: var.$light;
+        background: var.c('bg');
       }
 
       tbody tr:hover {
-        background-color: var.$row-hover-bg;
-        color: #fff;
+        background: var.c('alt');
+        color: var.c('text');
       }
     }
 
-    /* Card view styling */
     .card-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -90,11 +94,12 @@
 
       .card-item {
         @include mixins.card();
+        background: var.c('alt');
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        background: var.$card-bg;
+        color: var.c('text');
 
         img {
           width: 100%;
@@ -111,7 +116,7 @@
 
         .subtitle {
           font-size: 1rem;
-          color: var.$text-color-secondary;
+          color: var.c('text-secondary');
           margin-bottom: var.$gap;
         }
 
@@ -120,31 +125,29 @@
           display: flex;
           gap: var.$gap / 2;
 
-          a,
-          button {
+          a, button {
             flex: 1;
             background: transparent;
-            color: var.$text-color;
-            border: 1px solid var.$border;
+            color: var.c('text');
+            border: 1px solid var.c('border');
           }
 
           .btn-danger {
-            @include mixins.btn(var.$danger, var.$danger-hover);
+            @include mixins.btn(var.c('accent'), var.c('accent-hover'));
           }
         }
       }
     }
 
-    /* Pagination centered under views */
     .pagination {
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       gap: var.$gap;
       margin: var.$gap auto 0;
 
       button {
-        @include mixins.btn(var.$primary, var.$primary-hover);
+        @include mixins.btn(var.c('primary'), var.c('primary-hover'));
       }
     }
   }

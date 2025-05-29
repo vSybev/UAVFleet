@@ -81,6 +81,6 @@ export class OperatorListComponent implements OnInit {
   }
 
   getOperatorImage(): string {
-    return 'assets/images/operator-placeholder.png';
+    return 'assets/images/person_icon.png';
   }
 }

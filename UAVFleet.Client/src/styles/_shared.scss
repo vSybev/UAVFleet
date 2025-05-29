@@ -1,64 +1,119 @@
 @use 'variables' as var;
-@use 'mixins'    as mixins;
+@use 'mixins';
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var.$body-bg;
-  color: var.$text-color;
-  font-family: var.$font-family;
-  line-height: 1.6;
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+button, .fa-icon, svg {
+  color: var.c('icon') !important;
 }
 
 .filter-bar {
   display: flex;
   gap: var.$gap;
   margin-bottom: var.$gap;
+  background: var.c('surface-alt');
+  padding: var.$gap;
+  border-radius: var.$radius;
 }
 
 .loading {
   text-align: center;
   font-style: italic;
-  color: var.$text-color-secondary;
+  color: var.c('text-secondary');
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: var.$gap;
+  color: var.c('text');
 
-  th,
-  td {
-    border: 1px solid var.$border;
-    padding: var.$gap / 2;
+  th, td {
+    border: 1px solid var.c('border');
+    padding: var.$gap * 0.5;
     text-align: left;
   }
 
   th {
-    background-color: var.$light;
+    background: var.c('surface');
     font-weight: 600;
   }
 
-  // четни редове
   tr:nth-child(even) {
-    background-color: var.$light;
+    background: var.c('bg');
   }
 
-  // hover ефект върху ред
   tbody tr:hover {
-    background-color: var.$row-hover-bg;
-    color: #fff;
+    background: var.c('alt');
+    color: var.c('text');
   }
 }
 
 .pagination {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: var.$gap;
-  margin-top: var.$gap;
 
   button {
-    @include mixins.btn(var.$primary, var.$primary-hover);
+    @include mixins.btn(var.c('primary'), var.c('primary-hover'));
+  }
+}
+
+.fa-icon, svg {
+  color: var.c('icon') !important;
+  transition: color 0.3s ease;
+}
+
+button .fa-icon,
+button svg {
+  color: var.c('surface') !important;
+}
+
+
+.card,
+.filter-bar,
+.card-body,
+.table-container {
+  background: linear-gradient(
+      145deg,
+      rgba(var.c('surface-alt'), 0.85),
+      rgba(var.c('surface'), 0.9)
+  );
+  border-radius: var.$radius * 2;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1),
+  0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: var.$gap * 1.25;
+  transition: background 0.3s ease;
+}
+
+table .actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var.$gap / 2;
+
+  a,
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: var.$radius;
+    font-size: 1rem;
+  }
+
+  .btn-secondary {
+    @include mixins.btn(var.c('secondary'), var.c('secondary-hover'));
+  }
+
+  .btn-danger {
+    @include mixins.btn(var.c('danger'), var.c('danger-hover'));
   }
 }

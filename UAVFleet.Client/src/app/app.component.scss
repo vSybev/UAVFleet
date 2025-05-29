@@ -1,8 +1,8 @@
 @use 'variables' as var;
 
 .main-nav {
-  background: var.$menu-bg;
-  border-bottom: 1px solid var.$border;
+  background: var.c('header-bg');
+  border-bottom: 1px solid var.c('border');
   padding: var.$gap;
   display: flex;
   align-items: center;
@@ -10,13 +10,19 @@
 
   a {
     text-decoration: none;
-    color: var.$text-color;
+    color: var.c('text');
     padding: var.$gap / 2 var.$gap;
     border-radius: var.$radius;
+    transition: background 0.2s, color 0.2s;
 
     &.active {
-      background: var.$primary;
-      color: #fff;
+      background: var.c('primary');
+      color: var.c('text');
+    }
+
+    &:hover {
+      background: var.c('primary-hover');
+      color: var.c('text');
     }
   }
 
@@ -27,5 +33,11 @@
     cursor: pointer;
     margin-left: auto;
     font-size: 1.25rem;
+    color: var.c('icon');
+    transition: color 0.2s;
+
+    &:hover {
+      color: var.c('primary-hover');
+    }
   }
 }

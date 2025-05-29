@@ -1,5 +1,5 @@
 @use 'variables' as var;
-@use 'mixins'    as mixins;
+@use 'mixins' as mixins;
 
 .card {
   @include mixins.card();
@@ -7,28 +7,23 @@
   &-header {
     font-size: 1.5rem;
     font-weight: 700;
-    border-bottom: 2px solid var.$border;
-    padding-bottom: var.$gap / 2;
-    margin-bottom: var.$gap;
-
+    background: var.c('surface-alt');
+    color: var.c('text');
+    padding: var.$gap;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 
     h2 {
       margin: 0;
     }
 
     .add-button {
-      @include mixins.btn(var.$primary, var.$primary-hover);
+      @include mixins.btn(var.c('primary'), var.c('primary-hover'));
     }
   }
 
   &-body {
     padding: var.$gap;
   }
-}
-
-.card--center {
-  @include mixins.card(700px);
 }

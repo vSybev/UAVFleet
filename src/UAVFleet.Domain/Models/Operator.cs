@@ -1,5 +1,4 @@
-﻿// src/UAVFleet.Domain/Models/Operator.cs
-using System;
+﻿using System;
 
 namespace UAVFleet.Domain.Models
 {

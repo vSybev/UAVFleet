@@ -65,7 +65,9 @@
         <div class="subtitle">{{ d.manufacturer }} - {{ d.model }}</div>
         <div class="actions">
           <a [routerLink]="['/drones', d.droneId]" class="btn-primary"> Edit </a>
-          <button (click)="delete(d.droneId)" class="btn-danger"> Delete </button>
+          <button (click)="delete(d.droneId)"
+                  class="btn-danger">
+            Delete </button>
         </div>
       </div>
     </div>

@@ -27,16 +27,16 @@
     <!-- Table View -->
     <table *ngIf="!loading && viewMode === 'table'">
       <thead>
-      <tr>
-        <th>ID</th>
-        <th>Drone</th>
-        <th>Operator</th>
-        <th>Start</th>
-        <th>End</th>
-        <th>Objective</th>
-        <th>Result</th>
-        <th>Actions</th>
-      </tr>
+        <tr>
+          <th>ID</th>
+          <th>Drone</th>
+          <th>Operator</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Objective</th>
+          <th>Result</th>
+          <th>Actions</th>
+        </tr>
       </thead>
       <tbody>
         <tr *ngFor="let m of missions">
@@ -48,12 +48,12 @@
           <td>{{ m.objective }}</td>
           <td>{{ m.result }}</td>
           <td class="actions">
-            <a [routerLink]="['/missions', m.missionId]" class="btn-secondary">
+            <a [routerLink]="['/missions', m.missionId]" class="btn-secondary" style="height: 30px; width: 30px">
               <fa-icon icon="file-edit"></fa-icon>
             </a>
             <button (click)="delete(m.missionId)"
                     class="btn-danger"
-                    style="margin-left: 10px">
+                    style="height: 30px; width: 30px; margin-left: 5px">
               <fa-icon icon="trash-can"></fa-icon>
             </button>
           </td>
@@ -64,7 +64,11 @@
     <!-- Card View -->
     <div class="card-list" *ngIf="!loading && viewMode === 'cards'">
       <div class="card-item" *ngFor="let m of missions">
-        <img [src]="getPlaceholderImage()" alt="Mission" />
+        <img [ngSrc]="getPlaceholderImage()"
+             alt="Mission"
+             class="w-full h-auto mb-6 rounded-lg shadow-lg"
+             height="60"
+             width="60"/>
         <div class="title">{{ m.droneSerial }} &ndash; {{ m.operatorName }}</div>
         <div class="subtitle">{{ m.startTime | date:'short' }} to {{ m.endTime | date:'short' }}</div>
         <div class="actions">
@@ -74,6 +78,7 @@
       </div>
     </div>
 
+    <!-- Pagination -->
     <div class="pagination">
       <button (click)="prev()" [disabled]="page===1">Prev</button>
       <span>Page {{ page }} of {{ totalPages }}</span>

@@ -1,10 +1,5 @@
-// src/app/app.routes.ts
-
 import { Route } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
-
-// Вече няма нужда да импортваш LoginComponent/HomeComponent тук,
-// ако ги зареждаш с `loadComponent`. Но можеш и директно.
 
 export const appRoutes: Route[] = [
   // публичен Login маршрут
@@ -75,6 +70,23 @@ export const appRoutes: Route[] = [
         path: 'missions/:id',
         loadComponent: () =>
           import('./components/missions-form/missions-form.component').then(m => m.MissionFormComponent)
+      },
+
+      // users
+      {
+        path: 'users',
+        loadComponent: () => import('./components/user-list/user-list.component')
+          .then(m => m.UserListComponent)
+      },
+      {
+        path: 'users/new',
+        loadComponent: () => import('./components/user-form/user-form.component')
+          .then(m => m.UserFormComponent)
+      },
+      {
+        path: 'users/:id',
+        loadComponent: () => import('./components/user-form/user-form.component')
+          .then(m => m.UserFormComponent)
       },
 
       // по подразбиране -> home

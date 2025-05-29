@@ -1,4 +1,6 @@
 <nav *ngIf="auth.isLoggedIn" class="main-nav">
+  <a routerLink="/home" routerLinkActive="active">Home</a>
+  <a routerLink="/users" routerLinkActive="active">Users</a>
   <a routerLink="/drones" routerLinkActive="active">Drones</a>
   <a routerLink="/operators" routerLinkActive="active">Operators</a>
   <a routerLink="/missions" routerLinkActive="active">Missions</a>

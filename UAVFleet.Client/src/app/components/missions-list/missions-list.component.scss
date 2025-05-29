@@ -1,5 +1,5 @@
 @use 'variables' as var;
-@use 'mixins'    as mixins;
+@use 'mixins' as mixins;
 @use 'shared';
 
 :host {
@@ -10,12 +10,13 @@
   border: none;
   box-shadow: none;
 
-  /* Main card styling */
-  @include mixins.card();
+  .card {
+    @include mixins.card();
+  }
 
-  /* Header */
   .card-header {
-    background: transparent;
+    background: var.c('surface-alt');
+    color: var.c('text');
     padding: 0 var.$gap var.$gap;
     display: flex;
     align-items: center;
@@ -25,67 +26,62 @@
       margin: 0;
       font-size: 1.75rem;
       font-weight: 700;
+      color: var.c('text');
     }
 
     button {
       margin-left: var.$gap;
-      @include mixins.btn(var.$primary, var.$primary-hover);
+      @include mixins.btn(var.c('primary'), var.c('primary-hover'));
     }
   }
 
-  /* Body */
   .card-body {
     background: transparent;
     padding: 0;
 
-    /* Filter bar */
     .filter-bar {
       @include mixins.card();
+      background: var.c('surface-alt');
       padding: var.$gap;
       margin-bottom: var.$gap;
-      background: transparent;
       display: flex;
       gap: var.$gap;
 
       select {
         padding: var.$gap / 2;
-        border: 1px solid var.$border;
+        border: 1px solid var.c('border');
         border-radius: var.$radius;
       }
     }
 
-    /* Table View */
     table {
       width: 100%;
       max-width: 800px;
       margin: 0 auto var.$gap;
       border-collapse: collapse;
-      background: transparent;
+      background: var.c('bg');
 
-      th,
-      td {
-        border: 1px solid var.$border;
+      th, td {
+        border: 1px solid var.c('border');
         padding: var.$gap / 2;
         text-align: left;
-        background: transparent;
       }
 
       th {
-        background-color: var.$light;
+        background-color: var.c('surface');
         font-weight: 600;
       }
 
       tr:nth-child(even) {
-        background-color: var.$light;
+        background-color: var.c('bg');
       }
 
       tbody tr:hover {
-        background-color: var.$row-hover-bg;
-        color: #fff;
+        background-color: var.c('alt');
+        color: var.c('text');
       }
     }
 
-    /* Card View */
     .card-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -95,11 +91,12 @@
 
       .card-item {
         @include mixins.card();
-        background: var.$card-bg;
+        background: var.c('surface-alt');
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
+        color: var.c('text');
 
         img {
           width: 100%;
@@ -116,7 +113,7 @@
 
         .subtitle {
           font-size: 1rem;
-          color: var.$text-color-secondary;
+          color: var.c('text-secondary');
           margin-bottom: var.$gap;
         }
 
@@ -125,22 +122,20 @@
           display: flex;
           gap: var.$gap / 2;
 
-          a,
-          button {
+          a, button {
             flex: 1;
             background: transparent;
-            color: var.$text-color;
-            border: 1px solid var.$border;
+            color: var.c('text');
+            border: 1px solid var.c('border');
           }
 
           .btn-danger {
-            @include mixins.btn(var.$danger, var.$danger-hover);
+            @include mixins.btn(var.c('accent'), var.c('accent-hover'));
           }
         }
       }
     }
 
-    /* Pagination */
     .pagination {
       display: flex;
       align-items: center;
@@ -149,7 +144,7 @@
       margin: var.$gap auto 0;
 
       button {
-        @include mixins.btn(var.$primary, var.$primary-hover);
+        @include mixins.btn(var.c('primary'), var.c('primary-hover'));
       }
     }
   }

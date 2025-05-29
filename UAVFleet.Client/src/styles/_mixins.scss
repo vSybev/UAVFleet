@@ -1,9 +1,8 @@
 @use 'variables' as var;
 
-// Основен миксин за картичка с опция за максимална ширина
 @mixin card($max-width: null) {
-  background: var.$bg-sheet;
-  border: 1px solid var.$border;
+  background: var.c('surface-alt');
+  border: 1px solid var.c('border');
   border-radius: var.$radius;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: var.$gap;
@@ -19,29 +18,24 @@
   }
 }
 
-// Миксин за бутон с фон и hover ефект
 @mixin btn($bg, $hover) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var.$gap / 4;
-  padding: var.$gap / 2 var.$gap;
+  gap: var.$gap * 0.25;
+  padding: var.$gap * 0.5 var.$gap;
   border: none;
   border-radius: var.$radius;
   font-family: var.$font-family;
   font-size: 1rem;
   cursor: pointer;
   background: $bg;
-  color: #fff;
+  color: var.c('text');
   transition: background 0.2s, transform 0.1s;
 
   &:hover:not(:disabled) {
     background: $hover;
     transform: translateY(-1px);
-  }
-
-  &:active:not(:disabled) {
-    transform: translateY(0);
   }
 
   &:focus {
@@ -55,7 +49,6 @@
   }
 }
 
-// Миксин за контейнер на форма: grid layout, card стил, input styles
 @mixin form-container($max-width: 600px) {
   @include card($max-width);
   display: grid;
@@ -65,20 +58,21 @@
   label {
     align-self: center;
     font-weight: 600;
-    color: var.$text-color;
+    color: var.c('text');
   }
 
   input, select, textarea {
     width: 100%;
-    padding: var.$gap / 2;
-    border: 1px solid var.$border;
+    padding: var.$gap * 0.5;
+    background: var.c('field-bg');
+    color: var.c('text');
+    border: 1px solid var.c('border');
     border-radius: var.$radius;
     font-family: var.$font-family;
-    box-sizing: border-box;
     transition: border-color 0.2s;
 
     &:focus {
-      border-color: var.$primary;
+      border-color: var.c('primary');
       outline: none;
     }
   }
@@ -90,9 +84,9 @@
 
   .error, small {
     grid-column: 2;
-    color: var.$danger;
+    color: var.c('danger');
     font-size: 0.875rem;
-    margin-top: var.$gap / 4;
+    margin-top: var.$gap * 0.25;
   }
 
   .actions {
